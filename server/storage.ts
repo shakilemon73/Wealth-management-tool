@@ -204,6 +204,10 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const client: Client = {
       ...insertClient,
+      avatar: insertClient.avatar ?? null,
+      occupation: insertClient.occupation ?? null,
+      healthScore: insertClient.healthScore ?? 85,
+      riskProfile: insertClient.riskProfile ?? 'moderate',
       id,
       lastContact: new Date(),
       createdAt: new Date(),
@@ -216,6 +220,8 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const goal: Goal = {
       ...insertGoal,
+      progress: insertGoal.progress ?? 0,
+      priority: insertGoal.priority ?? 'medium',
       id,
       createdAt: new Date(),
     };
@@ -238,6 +244,11 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const action: Action = {
       ...insertAction,
+      clientId: insertAction.clientId ?? null,
+      description: insertAction.description ?? null,
+      priority: insertAction.priority ?? 'medium',
+      dueDate: insertAction.dueDate ?? null,
+      isCompleted: insertAction.isCompleted ?? false,
       id,
       createdAt: new Date(),
     };
@@ -335,6 +346,8 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const insight: Insight = {
       ...insertInsight,
+      priority: insertInsight.priority ?? 5,
+      isRead: insertInsight.isRead ?? false,
       id,
       createdAt: new Date(),
     };
@@ -356,6 +369,7 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const scenario: Scenario = {
       ...insertScenario,
+      results: insertScenario.results ?? null,
       id,
       createdAt: new Date(),
     };
