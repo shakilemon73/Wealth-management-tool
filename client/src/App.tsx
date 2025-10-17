@@ -35,8 +35,8 @@ function Router() {
 
 export default function App() {
   const sidebarStyle = {
-    "--sidebar-width": "20rem",
-    "--sidebar-width-icon": "4rem",
+    "--sidebar-width": "14rem",
+    "--sidebar-width-icon": "3.5rem",
   } as React.CSSProperties;
 
   return (

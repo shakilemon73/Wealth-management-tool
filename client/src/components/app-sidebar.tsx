@@ -73,13 +73,13 @@ export function AppSidebar() {
 
   return (
     <Sidebar data-testid="sidebar-main">
-      <SidebarHeader className="p-6">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-chart-1">
-            <Sparkles className="h-6 w-6 text-white" />
+      <SidebarHeader className="p-4">
+        <div className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-chart-1">
+            <Sparkles className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-foreground">WealthVision</h1>
+            <h1 className="text-base font-bold text-foreground">WealthVision</h1>
             <p className="text-xs text-muted-foreground">Pro</p>
           </div>
         </div>
