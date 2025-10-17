@@ -21,13 +21,15 @@ export function ClientCard({ client, onView }: ClientCardProps) {
       .slice(0, 2);
   };
 
-  const getHealthScoreColor = (score: number) => {
+  const getHealthScoreColor = (score: number | null | undefined) => {
+    if (score === null || score === undefined) return "bg-slate-400 text-white";
     if (score >= 80) return "bg-chart-2 text-white";
     if (score >= 60) return "bg-chart-4 text-white";
     return "bg-destructive text-white";
   };
 
-  const getHealthScoreLabel = (score: number) => {
+  const getHealthScoreLabel = (score: number | null | undefined) => {
+    if (score === null || score === undefined) return "Not Rated";
     if (score >= 80) return "Excellent";
     if (score >= 60) return "Good";
     return "Needs Attention";
