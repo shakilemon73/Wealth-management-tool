@@ -557,10 +557,82 @@
     background: hsl(var(--muted-foreground) / 0.5);
   }
 
-  /* Metric Animation */
+  /* Metric Animation & Typography */
   .metric-value {
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum' on, 'lnum' on;
+  }
+
+  /* Financial Typography - Luke Wroblewski & Don Norman Principles */
+  .typography-financial {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    letter-spacing: -0.02em;
+  }
+
+  .typography-heading {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .typography-body {
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+  }
+
+  .typography-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Improved Focus States - Don Norman's Feedback Principle */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+
+  /* Better Touch Targets - Luke Wroblewski Mobile-First */
+  @media (hover: none) and (pointer: coarse) {
+    button,
+    a,
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  /* Strategic Whitespace Utilities */
+  .section-spacing {
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+
+  .content-spacing {
+    padding: clamp(1rem, 3vw, 2rem);
+  }
+
+  /* Better Card Hover States - Micro-interactions */
+  .card-interactive {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .card-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .card-interactive:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-md);
   }
 
   /* Shimmer Loading Effect */

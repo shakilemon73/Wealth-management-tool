@@ -103,24 +103,30 @@ export default function Dashboard() {
 
   return (
     <div className="flex-1 overflow-auto bg-background dark:bg-background" data-testid="page-dashboard">
-      <div className="space-y-6 max-w-[1600px] mx-auto">
-        {/* Compact Header Bar */}
-        <div className="border-b bg-background dark:bg-background sticky top-0 z-10">
-          <div className="flex items-center justify-between p-4 lg:p-6">
-            <h1 className="text-xl font-semibold text-foreground">Dashboard</h1>
+      <div className="space-y-8 max-w-[1600px] mx-auto">
+        {/* Enhanced Header Bar - Don Norman's Visibility Principle */}
+        <div className="border-b bg-background/95 dark:bg-background/95 backdrop-blur sticky top-0 z-10 shadow-sm">
+          <div className="flex items-center justify-between px-6 lg:px-8 py-5">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground typography-heading">Dashboard</h1>
+              <p className="text-sm text-muted-foreground mt-1 typography-body">Your financial advisory command center</p>
+            </div>
             <div className="flex items-center gap-3">
               <Button 
                 variant="outline" 
-                size="sm"
-                className="gap-2"
+                size="default"
+                className="gap-2 hover-lift"
                 data-testid="button-ai-insights"
+                asChild
               >
-                <Sparkles className="h-4 w-4" />
-                AI Insights
+                <Link href="/insights">
+                  <Sparkles className="h-4 w-4" />
+                  <span>AI Insights</span>
+                </Link>
               </Button>
               <Button 
-                size="sm"
-                className="gap-2"
+                size="default"
+                className="gap-2 hover-lift"
                 data-testid="button-new-client"
               >
                 <Plus className="h-4 w-4" />
@@ -151,7 +157,7 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <>
-                  <div className="text-3xl font-bold font-mono text-foreground mb-1">
+                  <div className="text-3xl font-bold font-mono text-foreground mb-1 typography-financial">
                     {metrics?.totalAUM ? (
                       <AnimatedNumber value={metrics.totalAUM} prefix="$" />
                     ) : (
@@ -188,7 +194,7 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <>
-                  <div className="text-3xl font-bold font-mono text-foreground mb-1">
+                  <div className="text-3xl font-bold font-mono text-foreground mb-1 typography-financial">
                     {metrics?.activeClients ? (
                       <AnimatedNumber value={metrics.activeClients} />
                     ) : (
@@ -225,7 +231,7 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <>
-                  <div className="text-3xl font-bold font-mono text-foreground mb-1">
+                  <div className="text-3xl font-bold font-mono text-foreground mb-1 typography-financial">
                     {metrics?.pendingActions ? (
                       <AnimatedNumber value={metrics.pendingActions} />
                     ) : (
@@ -262,7 +268,7 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <>
-                  <div className="text-3xl font-bold font-mono text-foreground mb-1">
+                  <div className="text-3xl font-bold font-mono text-foreground mb-1 typography-financial">
                     {metrics?.portfolioPerformance ? (
                       <AnimatedNumber value={metrics.portfolioPerformance} suffix="%" />
                     ) : (
@@ -565,7 +571,7 @@ export default function Dashboard() {
                             <p className="text-sm text-muted-foreground truncate">{client.occupation}</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm font-mono font-bold text-foreground">
+                            <p className="text-sm font-mono font-bold text-foreground typography-financial">
                               ${parseFloat(client.netWorth).toLocaleString()}
                             </p>
                             <p className="text-xs text-muted-foreground">Net Worth</p>
