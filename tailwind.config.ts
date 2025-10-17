@@ -86,6 +86,20 @@ export default {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        display: ["Cabinet Grotesk", "Inter", "sans-serif"],
+      },
+      fontSize: {
+        'display': ['48px', { lineHeight: '56px', fontWeight: '700' }],
+        'h1': ['36px', { lineHeight: '44px', fontWeight: '600' }],
+        'h2': ['30px', { lineHeight: '38px', fontWeight: '600' }],
+        'h3': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+        'h4': ['20px', { lineHeight: '28px', fontWeight: '500' }],
+      },
+      boxShadow: {
+        'wealth': '0 1px 3px rgba(0,0,0,0.06)',
+        'wealth-lg': '0 4px 12px rgba(0,0,0,0.08)',
+        'wealth-xl': '0 8px 24px rgba(0,0,0,0.1)',
+        'glow': '0 0 20px rgba(59, 130, 246, 0.3)',
       },
       keyframes: {
         "accordion-down": {
