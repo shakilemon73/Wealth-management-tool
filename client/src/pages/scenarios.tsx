@@ -8,8 +8,6 @@ import {
   Home, 
   GraduationCap, 
   Heart,
-  TrendingUp,
-  Plus
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -58,59 +56,35 @@ export default function Scenarios() {
   const comparisonData = generateComparison();
 
   return (
-    <div className="flex-1 space-y-6 p-6 lg:p-8" data-testid="page-scenarios">
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="text-h1 font-semibold text-foreground">
-            Scenario Explorer
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            Model what-if scenarios and compare financial outcomes
-          </p>
-        </div>
-        <Button className="gap-2" data-testid="button-save-scenario">
-          <Plus className="h-4 w-4" />
-          Save Scenario
-        </Button>
+    <div className="flex-1 p-6 lg:p-8 content-focus" data-testid="page-scenarios">
+      <div className="space-y-2 mb-8">
+        <h1 className="visual-hierarchy-1">Scenarios</h1>
+        <p className="scan-paragraph text-muted-foreground">
+          Model what-if scenarios and compare outcomes
+        </p>
       </div>
 
       <Tabs defaultValue="retirement" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
-          <TabsTrigger value="retirement" className="gap-2">
-            <Calculator className="h-4 w-4" />
-            Retirement
-          </TabsTrigger>
-          <TabsTrigger value="purchase" className="gap-2">
-            <Home className="h-4 w-4" />
-            Major Purchase
-          </TabsTrigger>
-          <TabsTrigger value="education" className="gap-2">
-            <GraduationCap className="h-4 w-4" />
-            Education
-          </TabsTrigger>
-          <TabsTrigger value="legacy" className="gap-2">
-            <Heart className="h-4 w-4" />
-            Legacy
-          </TabsTrigger>
+        <TabsList>
+          <TabsTrigger value="retirement">Retirement</TabsTrigger>
+          <TabsTrigger value="purchase">Major Purchase</TabsTrigger>
+          <TabsTrigger value="education">Education</TabsTrigger>
+          <TabsTrigger value="legacy">Legacy</TabsTrigger>
         </TabsList>
 
         <TabsContent value="retirement" className="space-y-6">
-          <Card className="hover-elevate transition-all duration-300">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-primary" />
-                Investment Strategy Comparison
-              </CardTitle>
+          <Card>
+            <CardHeader className="border-b spacing-sm">
+              <CardTitle className="visual-hierarchy-3">Investment Strategy Comparison</CardTitle>
             </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={400}>
+            <CardContent className="spacing-md">
+              <ResponsiveContainer width="100%" height={350}>
                 <LineChart data={comparisonData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                   <XAxis 
                     dataKey="year" 
                     stroke="hsl(var(--muted-foreground))"
                     fontSize={12}
-                    label={{ value: 'Years', position: 'insideBottom', offset: -5 }}
                   />
                   <YAxis 
                     stroke="hsl(var(--muted-foreground))"
@@ -137,8 +111,8 @@ export default function Scenarios() {
                   <Line
                     type="monotone"
                     dataKey="moderate"
-                    stroke="hsl(var(--chart-1))"
-                    strokeWidth={3}
+                    stroke="hsl(var(--primary))"
+                    strokeWidth={2}
                     name="Moderate (7%)"
                     dot={false}
                   />
@@ -153,27 +127,27 @@ export default function Scenarios() {
                 </LineChart>
               </ResponsiveContainer>
 
-              <div className="mt-6 grid gap-4 md:grid-cols-3">
-                <div className="p-4 rounded-lg bg-gradient-to-br from-chart-4/10 to-chart-4/5 border border-chart-4/20">
+              <div className="mt-6 pt-6 border-t grid gap-4 md:grid-cols-3">
+                <div>
                   <p className="text-sm text-muted-foreground mb-1">Conservative</p>
-                  <p className="text-2xl font-mono font-bold text-foreground">
+                  <p className="text-2xl font-bold typography-financial">
                     ${comparisonData[6].conservative.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">After 30 years at 5%</p>
+                  <p className="text-sm text-muted-foreground mt-1">30 years at 5%</p>
                 </div>
-                <div className="p-4 rounded-lg bg-gradient-to-br from-chart-1/10 to-chart-1/5 border border-chart-1/20">
+                <div>
                   <p className="text-sm text-muted-foreground mb-1">Moderate</p>
-                  <p className="text-2xl font-mono font-bold text-foreground">
+                  <p className="text-2xl font-bold typography-financial">
                     ${comparisonData[6].moderate.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">After 30 years at 7%</p>
+                  <p className="text-sm text-muted-foreground mt-1">30 years at 7%</p>
                 </div>
-                <div className="p-4 rounded-lg bg-gradient-to-br from-chart-2/10 to-chart-2/5 border border-chart-2/20">
+                <div>
                   <p className="text-sm text-muted-foreground mb-1">Aggressive</p>
-                  <p className="text-2xl font-mono font-bold text-foreground">
+                  <p className="text-2xl font-bold typography-financial">
                     ${comparisonData[6].aggressive.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">After 30 years at 9%</p>
+                  <p className="text-sm text-muted-foreground mt-1">30 years at 9%</p>
                 </div>
               </div>
             </CardContent>
@@ -182,17 +156,16 @@ export default function Scenarios() {
 
         <TabsContent value="purchase" className="space-y-6">
           <div className="grid gap-6 lg:grid-cols-3">
-            <Card className="lg:col-span-2 hover-elevate transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Home className="h-5 w-5 text-primary" />
-                  Home Purchase Calculator
-                </CardTitle>
+            <Card className="lg:col-span-2">
+              <CardHeader className="border-b spacing-sm">
+                <CardTitle className="visual-hierarchy-3">Home Purchase Calculator</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="purchase-amount">Purchase Price</Label>
+              <CardContent className="spacing-md space-y-6">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-3">
+                    <Label htmlFor="purchase-amount" className="text-sm font-medium">
+                      Purchase Price
+                    </Label>
                     <Input
                       id="purchase-amount"
                       type="number"
@@ -202,8 +175,10 @@ export default function Scenarios() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="down-payment">Down Payment</Label>
+                  <div className="space-y-3">
+                    <Label htmlFor="down-payment" className="text-sm font-medium">
+                      Down Payment
+                    </Label>
                     <Input
                       id="down-payment"
                       type="number"
@@ -213,88 +188,91 @@ export default function Scenarios() {
                     />
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="interest-rate">Interest Rate (%)</Label>
-                      <Input
-                        id="interest-rate"
-                        type="number"
-                        step="0.1"
-                        value={interestRate}
-                        onChange={(e) => setInterestRate(Number(e.target.value))}
-                        data-testid="input-interest-rate"
-                      />
-                    </div>
+                  <div className="space-y-3">
+                    <Label htmlFor="interest-rate" className="text-sm font-medium">
+                      Interest Rate (%)
+                    </Label>
+                    <Input
+                      id="interest-rate"
+                      type="number"
+                      step="0.1"
+                      value={interestRate}
+                      onChange={(e) => setInterestRate(Number(e.target.value))}
+                      data-testid="input-interest-rate"
+                    />
+                  </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="loan-term">Loan Term (years)</Label>
-                      <Input
-                        id="loan-term"
-                        type="number"
-                        value={loanTerm}
-                        onChange={(e) => setLoanTerm(Number(e.target.value))}
-                        data-testid="input-loan-term"
-                      />
-                    </div>
+                  <div className="space-y-3">
+                    <Label htmlFor="loan-term" className="text-sm font-medium">
+                      Loan Term (years)
+                    </Label>
+                    <Input
+                      id="loan-term"
+                      type="number"
+                      value={loanTerm}
+                      onChange={(e) => setLoanTerm(Number(e.target.value))}
+                      data-testid="input-loan-term"
+                    />
                   </div>
                 </div>
 
-                <div className="p-6 rounded-lg bg-gradient-to-br from-primary/10 to-chart-1/10 border border-primary/20">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Estimated Monthly Payment</p>
-                      <p className="text-4xl font-mono font-bold text-foreground" data-testid="text-monthly-payment">
-                        ${monthlyPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-2">
-                        Principal & Interest only
-                      </p>
-                    </div>
-                    <Home className="h-16 w-16 text-primary opacity-20" />
-                  </div>
+                <div className="pt-6 border-t">
+                  <p className="text-sm text-muted-foreground mb-1">Monthly Payment</p>
+                  <p className="text-4xl font-bold typography-financial" data-testid="text-monthly-payment">
+                    ${monthlyPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Principal & Interest only
+                  </p>
                 </div>
               </CardContent>
             </Card>
 
             <div className="space-y-6">
-              <Card className="hover-elevate transition-all duration-300">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-muted-foreground">Loan Amount</CardTitle>
+              <Card>
+                <CardHeader className="spacing-sm">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Loan Amount
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-mono font-bold text-foreground">
+                  <p className="text-2xl font-bold typography-financial">
                     ${(purchaseAmount - downPayment).toLocaleString()}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-muted-foreground mt-2">
                     {((downPayment / purchaseAmount) * 100).toFixed(1)}% down
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="hover-elevate transition-all duration-300">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-muted-foreground">Total Interest</CardTitle>
+              <Card>
+                <CardHeader className="spacing-sm">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Total Interest
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-mono font-bold text-chart-4">
+                  <p className="text-2xl font-bold typography-financial">
                     ${((monthlyPayment * loanTerm * 12) - (purchaseAmount - downPayment)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-muted-foreground mt-2">
                     Over {loanTerm} years
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="hover-elevate transition-all duration-300">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm text-muted-foreground">Total Cost</CardTitle>
+              <Card>
+                <CardHeader className="spacing-sm">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Total Cost
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-mono font-bold text-foreground">
+                  <p className="text-2xl font-bold typography-financial">
                     ${(downPayment + (monthlyPayment * loanTerm * 12)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Down payment + all payments
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Down + all payments
                   </p>
                 </CardContent>
               </Card>
@@ -303,35 +281,35 @@ export default function Scenarios() {
         </TabsContent>
 
         <TabsContent value="education" className="space-y-6">
-          <Card className="hover-elevate transition-all duration-300">
-            <CardContent className="flex flex-col items-center justify-center py-16 px-4">
-              <GraduationCap className="h-16 w-16 text-muted-foreground mb-4 opacity-50" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                Education Planning
-              </h3>
-              <p className="text-muted-foreground text-center max-w-md">
-                Model college savings scenarios and estimate future education costs
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center spacing-xl">
+              <GraduationCap className="h-12 w-12 text-muted-foreground opacity-40 mb-4" />
+              <h3 className="visual-hierarchy-3 mb-2">Education Planning</h3>
+              <p className="scan-paragraph text-muted-foreground text-center">
+                Model college savings and estimate future costs
               </p>
-              <Button className="mt-6">Coming Soon</Button>
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="legacy" className="space-y-6">
-          <Card className="hover-elevate transition-all duration-300">
-            <CardContent className="flex flex-col items-center justify-center py-16 px-4">
-              <Heart className="h-16 w-16 text-muted-foreground mb-4 opacity-50" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                Legacy Planning
-              </h3>
-              <p className="text-muted-foreground text-center max-w-md">
-                Explore estate planning scenarios and wealth transfer strategies
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center spacing-xl">
+              <Heart className="h-12 w-12 text-muted-foreground opacity-40 mb-4" />
+              <h3 className="visual-hierarchy-3 mb-2">Legacy Planning</h3>
+              <p className="scan-paragraph text-muted-foreground text-center">
+                Explore estate planning and wealth transfer
               </p>
-              <Button className="mt-6">Coming Soon</Button>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
+
+      <div className="mt-8 flex justify-end">
+        <Button data-testid="button-save-scenario">
+          Save Scenario
+        </Button>
+      </div>
     </div>
   );
 }

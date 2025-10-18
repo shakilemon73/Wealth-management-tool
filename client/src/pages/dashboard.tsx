@@ -4,6 +4,11 @@ import { ActionItem } from "@/components/action-item";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip as TooltipUI,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { 
   DollarSign, 
   Users, 
@@ -16,7 +21,8 @@ import {
   Zap,
   Award,
   TrendingDown,
-  Activity
+  Activity,
+  HelpCircle
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { DashboardMetrics, Action, Client } from "@shared/schema";
@@ -103,33 +109,42 @@ export default function Dashboard() {
 
   return (
     <div className="flex-1 overflow-auto bg-background dark:bg-background" data-testid="page-dashboard">
-      <div className="space-y-8 max-w-[1600px] mx-auto">
+      <div className="space-y-8 max-w-[1600px] mx-auto content-focus">
         {/* Enhanced Header Bar - Don Norman's Visibility Principle */}
         <div className="border-b bg-background/95 dark:bg-background/95 backdrop-blur sticky top-0 z-10 shadow-sm">
-          <div className="flex items-center justify-between px-6 lg:px-8 py-5">
+          <div className="flex items-center justify-between px-6 lg:px-8 py-5 gap-md">
             <div>
-              <h1 className="text-2xl font-bold text-foreground typography-heading">Dashboard</h1>
-              <p className="text-sm text-muted-foreground mt-1 typography-body">Your financial advisory command center</p>
+              <h1 className="visual-hierarchy-1 scan-heading">Dashboard</h1>
+              <p className="text-sm text-muted-foreground mt-1 scan-paragraph">Manage your clients and track portfolio performance</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-sm">
+              <TooltipUI>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="default"
+                    className="gap-2 hover-lift touch-target"
+                    data-testid="button-ai-insights"
+                    aria-label="View AI-powered insights and recommendations"
+                    asChild
+                  >
+                    <Link href="/insights">
+                      <Sparkles className="h-4 w-4" aria-hidden="true" />
+                      <span>AI Insights</span>
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="text-sm">Get AI-powered recommendations for your clients</p>
+                </TooltipContent>
+              </TooltipUI>
               <Button 
-                variant="outline" 
                 size="default"
-                className="gap-2 hover-lift"
-                data-testid="button-ai-insights"
-                asChild
-              >
-                <Link href="/insights">
-                  <Sparkles className="h-4 w-4" />
-                  <span>AI Insights</span>
-                </Link>
-              </Button>
-              <Button 
-                size="default"
-                className="gap-2 hover-lift"
+                className="gap-2 hover-lift touch-target"
                 data-testid="button-new-client"
+                aria-label="Add a new client to your portfolio"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4" aria-hidden="true" />
                 New Client
               </Button>
             </div>
@@ -137,19 +152,20 @@ export default function Dashboard() {
         </div>
 
         {/* Premium Metrics Grid */}
-        <div className="px-6 lg:px-8 space-y-6">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="px-6 lg:px-8 spacing-md">
+        <div className="grid gap-lg md:grid-cols-2 lg:grid-cols-4" role="region" aria-label="Key portfolio metrics">
           <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-blue-600 bg-gradient-to-br from-white to-blue-50/50 dark:from-slate-900 dark:to-blue-950/20">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full -mr-16 -mt-16"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full -mr-16 -mt-16" aria-hidden="true"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+              <CardTitle className="text-sm font-medium text-muted-foreground icon-with-label">
                 Total AUM
+                <span className="sr-only">Assets Under Management</span>
               </CardTitle>
-              <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center" aria-hidden="true">
                 <DollarSign className="h-5 w-5 text-blue-600" />
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent aria-live="polite" aria-atomic="true">
               {metricsLoading ? (
                 <div className="space-y-2">
                   <div className="h-9 w-40 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
@@ -177,16 +193,16 @@ export default function Dashboard() {
           </Card>
 
           <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-green-600 bg-gradient-to-br from-white to-green-50/50 dark:from-slate-900 dark:to-green-950/20">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-green-600/5 rounded-full -mr-16 -mt-16"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-green-600/5 rounded-full -mr-16 -mt-16" aria-hidden="true"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 Active Clients
               </CardTitle>
-              <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-950 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-950 flex items-center justify-center" aria-hidden="true">
                 <Users className="h-5 w-5 text-green-600" />
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent aria-live="polite" aria-atomic="true">
               {metricsLoading ? (
                 <div className="space-y-2">
                   <div className="h-9 w-40 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
@@ -214,16 +230,16 @@ export default function Dashboard() {
           </Card>
 
           <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-amber-600 bg-gradient-to-br from-white to-amber-50/50 dark:from-slate-900 dark:to-amber-950/20">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-600/5 rounded-full -mr-16 -mt-16"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-600/5 rounded-full -mr-16 -mt-16" aria-hidden="true"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 Pending Actions
               </CardTitle>
-              <div className="h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-950 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-950 flex items-center justify-center" aria-hidden="true">
                 <AlertCircle className="h-5 w-5 text-amber-600" />
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent aria-live="polite" aria-atomic="true">
               {metricsLoading ? (
                 <div className="space-y-2">
                   <div className="h-9 w-40 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
@@ -251,16 +267,16 @@ export default function Dashboard() {
           </Card>
 
           <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-purple-600 bg-gradient-to-br from-white to-purple-50/50 dark:from-slate-900 dark:to-purple-950/20">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/5 rounded-full -mr-16 -mt-16"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/5 rounded-full -mr-16 -mt-16" aria-hidden="true"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 Portfolio Performance
               </CardTitle>
-              <div className="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-950 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-950 flex items-center justify-center" aria-hidden="true">
                 <TrendingUp className="h-5 w-5 text-purple-600" />
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent aria-live="polite" aria-atomic="true">
               {metricsLoading ? (
                 <div className="space-y-2">
                   <div className="h-9 w-40 bg-slate-200 dark:bg-slate-800 rounded animate-pulse"></div>
@@ -289,27 +305,37 @@ export default function Dashboard() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-lg lg:grid-cols-3">
           {/* Portfolio Chart - Takes 2/3 width */}
           <div className="lg:col-span-2">
             <Card className="shadow-lg hover:shadow-xl transition-all duration-300 border-0">
               <CardHeader className="border-b bg-gradient-to-r from-slate-50 to-transparent dark:from-slate-900">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-sm">
                   <div>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 visual-hierarchy-2">
                       Portfolio Performance
                       <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-400">
-                        <TrendingUp className="h-3 w-3 mr-1" />
+                        <TrendingUp className="h-3 w-3 mr-1" aria-hidden="true" />
                         +18.3%
                       </Badge>
+                      <TooltipUI>
+                        <TooltipTrigger asChild>
+                          <button className="touch-target" aria-label="Chart information">
+                            <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-sm">Shows aggregate portfolio growth over 12 months</p>
+                        </TooltipContent>
+                      </TooltipUI>
                     </CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-muted-foreground mt-1 scan-paragraph">
                       12-month trailing performance
                     </p>
                   </div>
-                  <Button variant="ghost" size="sm" className="gap-2">
+                  <Button variant="ghost" size="sm" className="gap-2 touch-target" aria-label="View detailed performance analytics">
                     View Details
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               </CardHeader>
@@ -336,49 +362,54 @@ export default function Dashboard() {
                     </div>
                   </div>
                 ) : (
-                  <ResponsiveContainer width="100%" height={320}>
-                    <AreaChart data={portfolioData || []}>
-                      <defs>
-                        <linearGradient id="portfolioGradientPremium" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.4} />
-                          <stop offset="50%" stopColor="#3b82f6" stopOpacity={0.2} />
-                          <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                      <XAxis 
-                        dataKey="date" 
-                        stroke="hsl(var(--muted-foreground))"
-                        fontSize={12}
-                        tickLine={false}
-                        axisLine={false}
-                      />
-                      <YAxis 
-                        stroke="hsl(var(--muted-foreground))"
-                        fontSize={12}
-                        tickLine={false}
-                        axisLine={false}
-                        tickFormatter={(value) => `$${value}M`}
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: "hsl(var(--background))",
-                          border: "1px solid hsl(var(--border))",
-                          borderRadius: "12px",
-                          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                        }}
-                        cursor={{ stroke: "#3b82f6", strokeWidth: 1, strokeDasharray: "5 5" }}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="value"
-                        stroke="#3b82f6"
-                        strokeWidth={3}
-                        fill="url(#portfolioGradientPremium)"
-                        animationDuration={1500}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
+                  <div role="img" aria-label="Portfolio performance chart showing 12-month growth trend">
+                    <ResponsiveContainer width="100%" height={320}>
+                      <AreaChart data={portfolioData || []} accessibilityLayer>
+                        <defs>
+                          <linearGradient id="portfolioGradientPremium" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.4} />
+                            <stop offset="50%" stopColor="#3b82f6" stopOpacity={0.2} />
+                            <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                        <XAxis 
+                          dataKey="date" 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                          tickLine={false}
+                          axisLine={false}
+                          label={{ value: 'Month', position: 'insideBottom', offset: -5 }}
+                        />
+                        <YAxis 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                          tickLine={false}
+                          axisLine={false}
+                          tickFormatter={(value) => `$${value}M`}
+                          label={{ value: 'Portfolio Value', angle: -90, position: 'insideLeft' }}
+                        />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: "hsl(var(--background))",
+                            border: "1px solid hsl(var(--border))",
+                            borderRadius: "12px",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                          }}
+                          cursor={{ stroke: "#3b82f6", strokeWidth: 1, strokeDasharray: "5 5" }}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="value"
+                          stroke="#3b82f6"
+                          strokeWidth={3}
+                          fill="url(#portfolioGradientPremium)"
+                          animationDuration={1500}
+                          name="Portfolio Value"
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
                 )}
               </CardContent>
             </Card>

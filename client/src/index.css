@@ -91,6 +91,16 @@
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
+  /* Navigation Design Tokens - World-Class Standards */
+  --nav-icon-size: 18px;
+  --nav-padding-vertical: 10px;
+  --nav-padding-horizontal: 12px;
+  --nav-gap: 2px;
+  --nav-section-gap: 20px;
+  --nav-font-size: 14px;
+  --nav-section-label-size: 11px;
+  --nav-section-label-spacing: 0.08em;
+
   /* Automatically computed borders - intensity can be controlled by the user by the --opaque-button-border-intensity setting */
 
   /* Fallback for older browsers */
@@ -645,5 +655,254 @@
     );
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
+  }
+
+  /* ========================================
+     DESIGN PHILOSOPHY IMPLEMENTATION
+     Following 10 World-Class Design Principles
+     ======================================== */
+
+  /* Don Norman - Signifiers & Affordances */
+  .clickable {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Steve Krug - Scannability (15 words max per section) */
+  .scan-heading {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .scan-paragraph {
+    max-width: 65ch; /* Optimal reading line length */
+    line-height: 1.6;
+  }
+
+  /* Luke Wroblewski - Touch Targets (minimum 44x44px) */
+  @media (hover: none) and (pointer: coarse) {
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+      padding: 12px;
+    }
+  }
+
+  /* Farai Madzima - Accessibility & Inclusion */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    * {
+      border-color: currentColor !important;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Julie Zhuo - Design System (8px Grid) */
+  .spacing-xs { padding: 0.5rem; } /* 8px */
+  .spacing-sm { padding: 1rem; } /* 16px */
+  .spacing-md { padding: 1.5rem; } /* 24px */
+  .spacing-lg { padding: 2rem; } /* 32px */
+  .spacing-xl { padding: 3rem; } /* 48px */
+
+  .gap-xs { gap: 0.5rem; }
+  .gap-sm { gap: 1rem; }
+  .gap-md { gap: 1.5rem; }
+  .gap-lg { gap: 2rem; }
+  .gap-xl { gap: 3rem; }
+
+  /* Aarron Walter - Emotional Design */
+  @keyframes celebrate {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  @keyframes success-pulse {
+    0% {
+      box-shadow: 0 0 0 0 hsl(var(--chart-2) / 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px hsl(var(--chart-2) / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 hsl(var(--chart-2) / 0);
+    }
+  }
+
+  .celebrate {
+    animation: celebrate 0.6s ease-out;
+  }
+
+  .success-pulse {
+    animation: success-pulse 2s infinite;
+  }
+
+  /* Jonathan Ive - Simplicity & Craftsmanship */
+  .content-focus {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .minimal-card {
+    background: transparent;
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  /* Dieter Rams - Understandable & Minimal */
+  .visual-hierarchy-1 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .visual-hierarchy-2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .visual-hierarchy-3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* Alan Cooper - Forgiveness & Error Prevention */
+  .error-state {
+    border-color: hsl(var(--destructive));
+    background-color: hsl(var(--destructive) / 0.05);
+  }
+
+  .success-state {
+    border-color: hsl(var(--chart-2));
+    background-color: hsl(var(--chart-2) / 0.05);
+  }
+
+  .warning-state {
+    border-color: hsl(var(--chart-4));
+    background-color: hsl(var(--chart-4) / 0.05);
+  }
+
+  /* Susan Weinschenk - Attention & Memory */
+  .attention-grabber {
+    position: relative;
+  }
+
+  .attention-grabber::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--chart-2)));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.2;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* Memory aid - Progressive disclosure */
+  .collapsed-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .collapsed-content.expanded {
+    max-height: 1000px;
+  }
+
+  /* Social Proof Indicators */
+  .social-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: hsl(var(--muted));
+    border-radius: 9999px;
+    font-size: 0.875rem;
+  }
+
+  /* Recognition over Recall - Familiar Icons */
+  .icon-with-label {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  /* ========================================
+     SIDEBAR NAVIGATION REDESIGN
+     Clean, minimal, world-class UX
+     Following Dieter Rams & Jonathan Ive principles
+     ======================================== */
+  
+  /* Active state: 3px border + background tint + bold text */
+  [data-sidebar] [data-active="true"] {
+    background-color: hsl(var(--primary) / 0.08);
+  }
+
+  .dark [data-sidebar] [data-active="true"] {
+    background-color: hsl(var(--primary) / 0.12);
+  }
+
+  /* Subtle hover state - clean transition, no motion */
+  [data-sidebar] a:not([data-active="true"]):hover {
+    background-color: hsl(var(--sidebar-accent) / 0.5);
+  }
+
+  /* Remove transform animations on sidebar items - motion without meaning */
+  [data-sidebar] a,
+  [data-sidebar] a * {
+    transition: color 0.15s ease, background-color 0.15s ease;
   }
 }

@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, PieChart, BarChart3, Activity } from "lucide-react";
+import { TrendingUp, PieChart, BarChart3 } from "lucide-react";
 import {
   Area,
   AreaChart,
@@ -42,38 +42,23 @@ const riskMetricsData = [
 
 export default function Analytics() {
   return (
-    <div className="flex-1 space-y-6 p-6 lg:p-8" data-testid="page-analytics">
-      <div>
-        <h1 className="text-h1 font-semibold text-foreground">
-          Analytics Dashboard
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Advanced portfolio analytics and performance insights
+    <div className="flex-1 p-6 lg:p-8 content-focus" data-testid="page-analytics">
+      <div className="space-y-2 mb-8">
+        <h1 className="visual-hierarchy-1">Analytics</h1>
+        <p className="scan-paragraph text-muted-foreground">
+          Portfolio performance metrics and risk analysis
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="hover-elevate transition-all duration-300">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-primary" />
-              Performance vs Benchmark
-            </CardTitle>
+      <div className="space-y-6">
+        <Card>
+          <CardHeader className="border-b spacing-sm">
+            <CardTitle className="visual-hierarchy-3">Performance vs Benchmark</CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="spacing-md">
+            <ResponsiveContainer width="100%" height={350}>
               <AreaChart data={performanceData}>
-                <defs>
-                  <linearGradient id="portfolioArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(var(--chart-2))" stopOpacity={0.4} />
-                    <stop offset="100%" stopColor="hsl(var(--chart-2))" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="benchmarkArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(var(--chart-1))" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="hsl(var(--chart-1))" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis 
                   dataKey="month" 
                   stroke="hsl(var(--muted-foreground))"
@@ -94,17 +79,19 @@ export default function Analytics() {
                 <Area
                   type="monotone"
                   dataKey="benchmark"
-                  stroke="hsl(var(--chart-1))"
-                  strokeWidth={2}
-                  fill="url(#benchmarkArea)"
+                  stroke="hsl(var(--muted-foreground))"
+                  strokeWidth={1}
+                  fill="hsl(var(--muted))"
+                  fillOpacity={0.3}
                   name="Benchmark"
                 />
                 <Area
                   type="monotone"
                   dataKey="portfolio"
-                  stroke="hsl(var(--chart-2))"
-                  strokeWidth={3}
-                  fill="url(#portfolioArea)"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={2}
+                  fill="hsl(var(--primary))"
+                  fillOpacity={0.1}
                   name="Portfolio"
                 />
               </AreaChart>
@@ -112,116 +99,118 @@ export default function Analytics() {
           </CardContent>
         </Card>
 
-        <Card className="hover-elevate transition-all duration-300">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <PieChart className="h-5 w-5 text-primary" />
-              Portfolio Allocation
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <RePieChart>
-                <Pie
-                  data={portfolioAllocationData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={2}
-                  dataKey="value"
-                  label={({ name, value }) => `${name} ${value}%`}
-                  labelLine={false}
-                >
-                  {portfolioAllocationData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "hsl(var(--card))",
-                    border: "1px solid hsl(var(--border))",
-                    borderRadius: "8px",
-                  }}
-                />
-              </RePieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="hover-elevate transition-all duration-300">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-primary" />
-              Risk Metrics
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={riskMetricsData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                <XAxis 
-                  dataKey="category" 
-                  stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
-                />
-                <YAxis 
-                  stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "hsl(var(--card))",
-                    border: "1px solid hsl(var(--border))",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Bar dataKey="value" fill="hsl(var(--chart-1))" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <div className="grid gap-6 grid-cols-2">
-          <Card className="hover-elevate transition-all duration-300">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm text-muted-foreground">Total Return</CardTitle>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card>
+            <CardHeader className="border-b spacing-sm">
+              <CardTitle className="visual-hierarchy-3">Portfolio Allocation</CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-3xl font-mono font-bold text-chart-2">+12.4%</p>
-              <p className="text-sm text-muted-foreground mt-1">YTD Performance</p>
+            <CardContent className="spacing-md">
+              <ResponsiveContainer width="100%" height={300}>
+                <RePieChart>
+                  <Pie
+                    data={portfolioAllocationData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
+                    paddingAngle={2}
+                    dataKey="value"
+                    label={({ name, value }) => `${name} ${value}%`}
+                    labelLine={false}
+                  >
+                    {portfolioAllocationData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </RePieChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate transition-all duration-300">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm text-muted-foreground">Alpha</CardTitle>
+          <Card>
+            <CardHeader className="border-b spacing-sm">
+              <CardTitle className="visual-hierarchy-3">Risk Metrics</CardTitle>
+            </CardHeader>
+            <CardContent className="spacing-md">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={riskMetricsData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis 
+                    dataKey="category" 
+                    stroke="hsl(var(--muted-foreground))"
+                    fontSize={12}
+                  />
+                  <YAxis 
+                    stroke="hsl(var(--muted-foreground))"
+                    fontSize={12}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Bar dataKey="value" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid gap-6 grid-cols-2 md:grid-cols-4">
+          <Card>
+            <CardHeader className="spacing-sm">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Total Return
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-mono font-bold text-chart-2">+2.8%</p>
-              <p className="text-sm text-muted-foreground mt-1">vs Benchmark</p>
+              <p className="text-2xl font-bold typography-financial">+12.4%</p>
+              <p className="text-sm text-muted-foreground mt-2">YTD Performance</p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate transition-all duration-300">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm text-muted-foreground">Sharpe Ratio</CardTitle>
+          <Card>
+            <CardHeader className="spacing-sm">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Alpha
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-mono font-bold text-foreground">1.8</p>
-              <p className="text-sm text-muted-foreground mt-1">Risk-Adjusted</p>
+              <p className="text-2xl font-bold typography-financial">+2.8%</p>
+              <p className="text-sm text-muted-foreground mt-2">vs Benchmark</p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate transition-all duration-300">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm text-muted-foreground">Volatility</CardTitle>
+          <Card>
+            <CardHeader className="spacing-sm">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Sharpe Ratio
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-mono font-bold text-chart-4">12.0%</p>
-              <p className="text-sm text-muted-foreground mt-1">Annualized</p>
+              <p className="text-2xl font-bold typography-financial">1.8</p>
+              <p className="text-sm text-muted-foreground mt-2">Risk-Adjusted</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="spacing-sm">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Volatility
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold typography-financial">12.0%</p>
+              <p className="text-sm text-muted-foreground mt-2">Annualized</p>
             </CardContent>
           </Card>
         </div>
